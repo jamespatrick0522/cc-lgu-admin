@@ -1,8 +1,8 @@
 import { http } from './http';
-import type { Establishment, PaginatedResponse } from '@/types/api';
+import type { Establishment, ListingStatus, PaginatedResponse } from '@/types/api';
 
 export interface GetEstablishmentsParams {
-  listingStatus?: 'pending' | 'verified' | 'rejected';
+  listingStatus?: ListingStatus;
   search?: string;
   city?: string;
   page?: number;
@@ -19,9 +19,14 @@ export async function getEstablishments(
   return data;
 }
 
-export async function verifyEstablishment(id: string, listingStatus: 'verified' | 'rejected') {
+export async function verifyEstablishment(
+  id: string,
+  listingStatus: 'verified' | 'rejected',
+  statusNote?: string,
+) {
   const { data } = await http.patch(`/establishments/${id}/verify`, {
     listingStatus,
+    statusNote,
   });
 
   return data;

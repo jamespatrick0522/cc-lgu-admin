@@ -16,6 +16,31 @@ export interface AuthResponse {
   user: AuthUser;
 }
 
+export type ListingStatus = 'draft' | 'pending' | 'verified' | 'rejected';
+
+export interface EstablishmentMedia {
+  id: string;
+  establishmentId: string;
+  type: 'image' | 'video';
+  url: string;
+  publicId: string | null;
+  format: string | null;
+  bytes: number | null;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface EstablishmentRequirements {
+  hasBusinessPermitNumber: boolean;
+  galleryImageCount: number;
+  minGalleryImages: number;
+  maxGalleryImages: number;
+  hasLocationVideo: boolean;
+  canSubmitForApproval: boolean;
+  missing: string[];
+}
+
 export interface Establishment {
   id: string;
   ownerUserId: string | null;
@@ -23,10 +48,22 @@ export interface Establishment {
   name: string;
   category: 'tourist_spot' | 'restaurant' | 'clinic_hospital' | 'mall' | 'other';
   address: string;
-  listingStatus: 'pending' | 'verified' | 'rejected';
+  description: string | null;
+  services: string | null;
+  businessPermitNumber: string | null;
+  contactNumber: string | null;
+  email: string | null;
+  opensAt: string | null;
+  closesAt: string | null;
+  listingStatus: ListingStatus;
   businessStatus: 'open' | 'closed' | 'temporarily_closed';
   isOpenNow: boolean;
   coverPhotoUrl?: string | null;
+  statusNote: string | null;
+  latitude: string | null;
+  longitude: string | null;
+  media: EstablishmentMedia[];
+  requirements: EstablishmentRequirements;
   createdAt: string;
 }
 
